@@ -18,15 +18,15 @@ load offAxisDirectionSamples.mat
 %% Net inputs <- Change these values!!!!
 x0 =300; %target length (x)
 y0 = 300; %target height (y)
-Dtarg = 3000; %distance from the source to the target
 
-designpoints = [x0;y0];
+
+designpoints = [x0;y0]; % input parameters into the network
 netoutput = net(designpoints);
 alpha = netoutput(1);
-beta = netoutput(2);
+beta = netoutput(2); % first two net outputs are tilt parameters
 SPHterms = netoutput(3:end);
 
-[x2,y2,z2,s2,n,m]  = MakefromSPH(SPHterms, dirs, 10); % build the surface
+[x2,y2,z2,s2,n,m]  = MakefromSPH(SPHterms, dirs, 10); % build the surface from SPH terms
 
 figure;
 surf(x2,y2,z2) % plot the surface
@@ -40,6 +40,7 @@ NewV3D(js,lt);
 
 Lo = 500;
 Wo = 500;
+Dtarg = 3000; %distance from the source to the target
 MakeDummyPlane(js,lt,x0,y0,-Dtarg,0,0,1,'N','Rectangular',2*Lo,2*Wo,'myDummy');
 MakeReceiver(js,lt,'myDummy','dummyplane','myreceiver');
 
